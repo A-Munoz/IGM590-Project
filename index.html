@@ -4,17 +4,88 @@
     <head>
         <meta charset="utf-8">
    <style>
-      body { margin: 0 }
+      body { margin: 0;
+      
+       }
       canvas { 
-        width:100%;
+        right: 0;
+        top: 0;
+        width:80%;
+        max-width: 100%-400px;
         height:100%;
         position:absolute; 
+        float: right;
       }
+       section{
+           width: 20%;
+           min-width: 400px;
+           background-color: #333232;
+           height:100%;
+           position:absolute;
+           color: white;
+           float: left;
+       }
+       form{
+           padding: 20px;
+       }
+       h1{
+           color: white;
+           font-size: 24px;
+           text-align: center;
+       }
+       div h1{
+       
+           font-size: 20px;
+           text-align: left;
+           line-height: 20px;
+       }
+       span h1{
+            color: white;
+           font-size: 18px;
+           text-align: left;
+       }
+       input{
+            color: black;
+           font-size: 18px; 
+           
+       }
+       span{
+           padding: 5px 10px 10px 10px;
+       }
+       p{
+           color: white;
+           font-style: italic;
+       }
     </style> 
         
   </head>
   <body>
     <canvas></canvas>
+      
+      <section>
+          
+      <form>
+        <h1>Project 1</h1>
+          
+        <div id="colorTitle"><h1>Colors</h1>
+      <span><h1>Color One:</h1><input type="text" id="colorOne" value="#C73E1D"><button type="button"   id="OneButton" >Submit</button></span>
+            <span><h1>Color Two:</h1><input type="text" id="colorTwo" value="#DDDDDD"><button type="button"   id="TwoButton" >Submit</button></span>
+     <span><h1>Color Three:</h1><input type="text" id="colorThree" value="#A6D49F"><button type="button"   id="ThreeButton" >Submit</button></span>
+        <span><h1>Color Four:</h1><input type="text" id="colorFour" value="#333232"><button  type="button"  id="FourButton" >Submit</button></span>
+            <p>*Don't forget the '#'</p>
+          </div>
+          
+        <div id="timerTitle"><h1>Beat Timer</h1>
+      <span><h1>Beat:</h1><input type="text" id="timerOne" value="2000"><button type="button"   id="OneTimerButton" >Submit</button></span>
+     <span><h1>Second Beat:</h1><input type="text" id="timerTwo" value="2500"><button type="button"   id="TwoTimerButton" >Submit</button></span>
+     <span><h1>Melody:</h1><input type="text" id="timerThree" value="3000"><button type="button"   id="ThreeTimerButton" >Submit</button></span>
+             <p>*1000 = 1sec</p>
+          </div>
+          
+          <a href="Project1.pdf">Documentation</a>
+      </form>
+          </section>
+      
       
   </body>
         <script src="main.js"></script>

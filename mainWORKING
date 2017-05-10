@@ -673,17 +673,17 @@ var beat = function(){
      
       
       //////////////// USER INPUT ////////////////////////////////////////////////////
-
-      ////NOT IN USE////////////
- /*canvas.addEventListener("mousedown", function(){
+      
+ canvas.addEventListener("mousedown", function(){
      
      var y = random()
      var x = random()
      console.log(x,y)
     
    grid[y][x] = 0;
+
      
- }, false)    */ 
+ }, false)     
       
 document.querySelector("#OneButton").onclick = function(){
     var colorValue = document.getElementById("colorOne").value
@@ -732,8 +732,7 @@ function clear(){
     clearInterval(intervalTwo)
 }
 
-//Valid hex check
-///http://stackoverflow.com/questions/8027423/how-to-check-if-a-string-is-a-valid-hex-color-representation
+
 function colorChange(value,color){
     var check = /^#[0-9A-F]{6}$/i.test(value)
     if(check === true){
@@ -750,9 +749,8 @@ function timerCheck(value,current){
     return current
 }
 
-////////// WASN'T FINISHED//////////////
-/*function random(){
-    return Math.floor(Math.random() * width) 
-}*/
+function random(){
+    return Math.floor(Math.random() *(400 - 400 + 1)) +1 ;
+}
 
 /////////////// END OF USER INPUT //////////////////////////////////////////
