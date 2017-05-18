@@ -18,15 +18,13 @@
       
       let bgColor = '#DDDDDD'
       let cColor = '#C73E1D'
-      let currentpattern = 'pattern1'
+      let currentPattern = 1
+      let musicPattern = 1
       
+      var beatOne = [1,1,1]
+      var beatTwo = [2,2,2]
+      var beatThree = [3,3,3]
       
-      let pattern1 = 'pattern1'
-      let pattern2 = 'pattern2'
-      
-      var intervalThree
-      var intervalTwo
-      var intervalOne
       
       //Changable Values
       let colorWhite ='#DDDDDD' // White
@@ -34,10 +32,11 @@
       let colorGrey = '#333232' //grey
       let colorGreen = '#A6D49F' //green
       
-      let timerOne = 2000;
-      let timerTwo = 2500;
-      let timerThree = 3000;
-     
+      let timerOne = 1000;
+      let timerTwo = 1500;
+      let timerThree = 2000;
+      
+      
 
       canvas.width = width
       canvas.height = height
@@ -55,7 +54,7 @@
       }
 
 //Sets the state of the new cells
-    function fourStateChange( cellOne, cellTwo, cellThree, cellFour) {
+  /*  function fourStateChange( cellOne, cellTwo, cellThree, cellFour) {
        
         
             if(cellOne === 1){ //Cell One On
@@ -117,7 +116,7 @@
         
         return 0
         
-    }
+    }*/
 
       let runAutomata = function() {
         // loop through every cell
@@ -189,6 +188,8 @@
                      bL = grid[0][width-1]  //BottomLeft
                      bM =grid[0][x] //BottomMiddle
                      bR =grid[0][x+1] //BottomRight
+                     
+                     musicPattern = 2
                 }
                 else if(x==width){
                      tL = grid[y-1][x-1] //topLeft
@@ -247,17 +248,66 @@
                      bR =grid[y-1][x+1] //BottomRight
             }
             
-          if(currentpattern === pattern1){
-             temp[y][x] = fourStateChange(tM, mR, mL, bM)
-             }
-            else{
-                   liveCount = tL + tM + tR + mL +mR+ bL+ bM+ bR //Add up the population
-            if(liveCount > 3 || liveCount < 2){ //Dies if over populated or underpopulated
-                temp[x][y] = 0
-            }
-            else{ //Become Alive due to repopulation or continues to live
-                temp[x][y]= 1
-            }
+         liveCount = tL + tM + tR + mL +mR+ bL+ bM+ bR //Add up the population
+            switch(currentPattern){
+                case 1: 
+                    
+                    if(liveCount > 5 || liveCount < 1){ //Dies if over populated or underpopulated
+                        temp[x][y] = 0
+                               }
+                    else{ //Become Alive due to repopulation or continues to live
+                        temp[x][y]= 1
+                    }
+                    
+                    break;
+                case 2: 
+                    
+                    if(liveCount > 8 || liveCount < 3){ //Dies if over populated or underpopulated
+                        temp[x][y] = 0
+                    }
+                    else{ //Become Alive due to repopulation or continues to live
+                        temp[x][y]= 1
+                    }
+                    
+                    break;
+                case 3: 
+                    
+                       if(liveCount > 7 || liveCount < 4){ //Dies if over populated or underpopulated
+                            temp[x][y] = 0
+                        }
+                        else{ //Become Alive due to repopulation or continues to live
+                            temp[x][y]= 1
+                        }
+                    
+                    break;
+                case 4: 
+                    
+                     if(liveCount > 6 || liveCount < 4){ //Dies if over populated or underpopulated
+                            temp[x][y] = 0
+                        }
+                        else{ //Become Alive due to repopulation or continues to live
+                            temp[x][y]= 1
+                        }
+                    
+                    break;
+                    
+                case 5: //Revival Pattern
+                    
+                    if(liveCount > 5){ 
+                        temp[x][y] = 0
+                    } else{
+                        temp[x][y]= 1
+                    }
+                    
+                    break;
+                default: 
+                    
+                        for( let x = 0; x < width; x++ ) {
+                            grid[ y ][ x ] = Math.round( Math.random() )
+                            temp[ y ][ x ] = 0 
+                        }
+                    
+                    break;
             }
    
         }
@@ -550,22 +600,7 @@ var beat = function(){
           
          intervalOne = setInterval(function(){ 
 
-            var kick = new Kick(context)
-         
-            var snare = new Snare(context)
-            
-             var snare2 = new Snare2(context) // altered Snare
-         
-            var now = context.currentTime
-         
-         kick.trigger(now) 
-         kick.trigger(now +.25)
-         kick.trigger(now + .75)
-         
-         snare.trigger(now + 1)
-         
-         kick.trigger(now + 1.75)
-         kick.trigger(now + 1.85)  
+                beatCreation(beatOne);
          
          //Change the Color the cells and canvas
          if(cColor === colorOrange){
@@ -576,58 +611,29 @@ var beat = function(){
               cColor = colorOrange
               bgColor = colorWhite
          }
-             
-            currentpattern = pattern2
-       
-             
+         
      }, timerOne)
          
       intervalTwo = setInterval(function(){ 
-             
-   
-             var snare2 = new Snare2(context)
-         
-            var now = context.currentTime
- 
-         
-         snare2.trigger(now + 1)
-             
-     
-            currentpattern = pattern1
-
-             
+         beatCreation(beatTwo);
+          
+          if(currentPattern < 6){
+              currentPattern ++
+          }
+          else{
+              currentPattern = 1
+          }
+          
      }, timerTwo)
        
  intervalThree = setInterval(function(){ 
              
-                // Higher pitch melody, based off Kick 
-              var exp1 = new Expermental(context)
-              var exp2 = new Expermental2(context)
-              var exp3 = new Expermental3(context)
-             var exp4 = new Expermental3(context)
-         
-            var now = context.currentTime
-    
-            exp1.trigger(now + .25, .5 )
-            exp1.trigger(now + .50, .5 )
-            exp1.trigger(now + .75, .5 )
-            exp1.trigger(now + 1.25, .5 )
-            exp1.trigger(now + 1.50, .5 )
-            exp1.trigger(now + 1.75, .5 )
-            exp1.trigger(now + 2.25, .5 )
-            exp1.trigger(now + 2.50, .5 )
-            exp1.trigger(now + 2.75, .5 )
-         
-       
-         
-         exp2.trigger(now + .30,.5)
-         exp3.trigger(now + .55, .5)
-         exp4.trigger(now + .80, .5)
-         exp3.trigger(now + 1.05, .5)
-    
-         exp2.trigger(now + 2.30,.5)
-         exp4.trigger(now + 2.55, .5)
-         exp3.trigger(now + 2.80, .5)
+        beatCreation(beatThree);
+        if(beatThree.count < 6){
+            currentPattern = beatThree.count
+        } else{
+             currentPattern = Math.floor(Math.random() * 6) + 1 
+        }
 
         //Color Change
        cColor = colorGrey
@@ -635,22 +641,69 @@ var beat = function(){
 
              
      }, timerThree)
-         
-      
+            
      }
+
+function beatCreation(pattern){
+            
+            var kick = new Kick(context) 
+            var snare = new Snare(context)
+            var snare2 = new Snare2(context) // altered Snare
+            var exp1 = new Expermental(context)
+            var exp2 = new Expermental2(context)
+            var exp3 = new Expermental3(context)
+            var exp4 = new Expermental4(context)
+            var now = context.currentTime
+    
+    for(let i = 0; i < pattern.count; i++){
+        switch(pattern[i]){
+            case '1':
+                exp1.trigger(now, .5)
+                break;
+            case '2':
+                exp2.trigger(now, .5)
+                break;
+            case '3':
+                exp3.trigger(now, .5)
+                break;
+            case '4':
+                snare.trigger(now, .5)
+                break;
+            case '5':
+               snare2.trigger(now, .5)
+                break;
+            case '6':
+                kick.trigger(now, .5)
+                break;
+            default:
+                exp4.trigger(now, .5)
+        }
+    }
+}
+
+function stringParse(str){
+    
+    var tempArr = str.split(",")
+    
+    if(tempArr.count == 0){
+        tempArr = str.split(" ")
+    }
+    return tempArr
+}
         
 /////////////////////////////////////////////////////////////////////////////////////////////
  
 ///////////////////////////// DRAW FUNCTION //////////////////////////////////////////
-     let count = 0 
+     let counterOne = 0
+     let counterTwo = 0
+     let counterThree = 0
        
-        beat()
+     beat()
       
       let draw = function() {
        
         runAutomata()
           
-  
         ctx.fillStyle = bgColor
         ctx.fillRect( 0,0,width,height )
         ctx.fillStyle = cColor
@@ -667,23 +720,14 @@ var beat = function(){
         window.requestAnimationFrame( draw )
       }
       
-         
+     counterTwo, counterThree = counterOne++
+     console.log(counterThree)
+     
      
       window.requestAnimationFrame( draw )
      
       
       //////////////// USER INPUT ////////////////////////////////////////////////////
-
-      ////NOT IN USE////////////
- /*canvas.addEventListener("mousedown", function(){
-     
-     var y = random()
-     var x = random()
-     console.log(x,y)
-    
-   grid[y][x] = 0;
-     
- }, false)    */ 
       
 document.querySelector("#OneButton").onclick = function(){
     var colorValue = document.getElementById("colorOne").value
@@ -749,10 +793,5 @@ function timerCheck(value,current){
     }
     return current
 }
-
-////////// WASN'T FINISHED//////////////
-/*function random(){
-    return Math.floor(Math.random() * width) 
-}*/
 
 /////////////// END OF USER INPUT //////////////////////////////////////////
