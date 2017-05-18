@@ -56,6 +56,43 @@
            color: white;
            font-style: italic;
        }
+       
+       input[type="text"] {
+           padding: 5px;
+           border: none;
+           border-bottom: solid 2px #c9c9c9;
+           transition: border 0.3s;
+           margin-right: 10px
+
+       }
+       input[type="text"]:focus, input[type="text"].focus {
+           border-bottom: solid 5px #C73E1D;
+       }
+    
+        button {
+            background-color:#C73E1D;
+            -moz-border-radius:20px;
+            -webkit-border-radius:20px;
+            border-radius:20px;
+            border:1px solid #C73E1D;
+            display:inline-block;
+            cursor:pointer;
+            color:#ffffff;
+            font-family:Arial;
+            font-size:17px;
+            padding:10px;
+            text-decoration:none;
+            text-shadow:0px 1px 0px #AD3619;
+        }
+         button:hover {
+            background-color:#AD3619;
+        }
+         button:active {
+            position:relative;
+            top:1px;
+        }
+
+
     </style> 
         
   </head>
@@ -65,7 +102,7 @@
       <section>
           
       <form>
-        <h1>Project 1</h1>
+        <h1>Project 2</h1>
           
         <div id="colorTitle"><h1>Colors</h1>
       <span><h1>Color One:</h1><input type="text" id="colorOne" value="#C73E1D"><button type="button"   id="OneButton" >Submit</button></span>
@@ -75,11 +112,11 @@
             <p>*Don't forget the '#'</p>
           </div>
           
-        <div id="timerTitle"><h1>Beat Timer</h1>
-      <span><h1>Beat:</h1><input type="text" id="timerOne" value="2000"><button type="button"   id="OneTimerButton" >Submit</button></span>
-     <span><h1>Second Beat:</h1><input type="text" id="timerTwo" value="2500"><button type="button"   id="TwoTimerButton" >Submit</button></span>
-     <span><h1>Melody:</h1><input type="text" id="timerThree" value="3000"><button type="button"   id="ThreeTimerButton" >Submit</button></span>
-             <p>*1000 = 1sec</p>
+        <div id="timerTitle"><h1>Beat Patterns</h1>
+      <span><h1>Beat:</h1><input type="text" id="timerOne" value="1,1,1"><button type="button"   id="OneTimerButton" >Submit</button></span>
+     <span><h1>Second Beat:</h1><input type="text" id="timerTwo" value="2,2,2"><button type="button"   id="TwoTimerButton" >Submit</button></span>
+     <span><h1>Melody:</h1><input type="text" id="timerThree" value="3,3,3"><button type="button"   id="ThreeTimerButton" >Submit</button></span>
+             <p>*EX: 1,2,3,4,5,6</p>
           </div>
           
           <a href="Project1.pdf">Documentation</a>
@@ -88,5 +125,5 @@
       
       
   </body>
-        <script src="main.js"></script>
+        <script src="main-es6.js"></script>
 </html>

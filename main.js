@@ -7,7 +7,7 @@
 
     'use strict'
       const canvas = document.querySelector( 'canvas' )
-      const ctx = canvas.getContext( '2d' )        
+      const ctx = canvas.getContext( '2d' )    
     
 ///////////////////////////// GRID ////////////////////////////////////////////////////////
       const width = 200
@@ -20,10 +20,10 @@
       let cColor = '#C73E1D'
       let currentPattern = 1
       let musicPattern = 1
-      
-      var beatOne = [1,1,1]
-      var beatTwo = [2,2,2]
-      var beatThree = [3,3,3]
+    
+      let beatOne = ['5','2','1','3','1','4']
+      let beatTwo = ['6','','5']
+      let beatThree = ['5','3','3','1']
       
       
       //Changable Values
@@ -34,13 +34,21 @@
       
       let timerOne = 1000;
       let timerTwo = 1500;
-      let timerThree = 2000;
+      let timerThree =2000;
       
+      let mouseX;
+      let mouseY;
       
 
-      canvas.width = width
-      canvas.height = height
+      canvas.width = width;
+      canvas.height = height;
       
+      
+      document.onmousemove = function(e){
+          let mouse = getMousePos(canvas, e)
+          mouseX = mouse.x
+          mouseY = mouse.y
+      }
    
 
       for( let y = 0; y < height; y++ ) {
@@ -594,13 +602,72 @@ Expermental4.prototype.trigger = function(time, length) {
 
 }
 
+function beatCreation(pattern){
+         
+          console.log("test:",pattern)
+          var number1 = pattern[1]
+          console.log(number1)
+            var kick = new Kick(context) 
+            var snare = new Snare(context)
+            var snare2 = new Snare2(context) // altered Snare
+            var exp1 = new Expermental(context)
+            var exp2 = new Expermental2(context)
+            var exp3 = new Expermental3(context)
+            var exp4 = new Expermental4(context)
+            var now = context.currentTime
+    
+            console.log(pattern.length)
+            let time = .25
+    for (var i = 0; i < pattern.length; i++){
+        
+        console.log("beep")
+        let number = pattern[i-1]
+        console.log("test2",number)
+        
+        switch(number){
+            case "1":
+                exp1.trigger(now + time, )
+                break;
+            case "2":
+                exp2.trigger(now +time, .5)
+                exp2.trigger(now + time, .5)
+                break;
+            case "3":
+                exp3.trigger(now + time, .5)
+                break;
+            case "4":
+                snare.trigger(now + time, .5)
+                break;
+            case "5":
+               snare2.trigger(now + time, .5)
+                break;
+            case "6":
+                kick.trigger(now + time, .5)
+                break;
+            default:
+                exp4.trigger(now + time, .5)
+        }
+        time += .25
+    }
+}
+
+function stringParse(str){
+    
+    var tempArr = str.split(",")
+    
+    if(tempArr.count == 0){
+        tempArr = str.split(" ")
+    }
+    return tempArr
+}
+
 //////////////////////////////
         
 var beat = function(){
           
-         intervalOne = setInterval(function(){ 
+      var  intervalOne = setInterval(function(){ 
 
-                beatCreation(beatOne);
+      beatCreation(beatOne)
          
          //Change the Color the cells and canvas
          if(cColor === colorOrange){
@@ -614,7 +681,7 @@ var beat = function(){
          
      }, timerOne)
          
-      intervalTwo = setInterval(function(){ 
+    var  intervalTwo = setInterval(function(){ 
          beatCreation(beatTwo);
           
           if(currentPattern < 6){
@@ -626,8 +693,8 @@ var beat = function(){
           
      }, timerTwo)
        
- intervalThree = setInterval(function(){ 
-             
+var intervalThree = setInterval(function(){ 
+            console.log(beatThree) 
         beatCreation(beatThree);
         if(beatThree.count < 6){
             currentPattern = beatThree.count
@@ -635,82 +702,49 @@ var beat = function(){
              currentPattern = Math.floor(Math.random() * 6) + 1 
         }
 
-        //Color Change
-       cColor = colorGrey
-        bgColor =colorWhite
+    
 
              
      }, timerThree)
             
      }
 
-function beatCreation(pattern){
-            
-            var kick = new Kick(context) 
-            var snare = new Snare(context)
-            var snare2 = new Snare2(context) // altered Snare
-            var exp1 = new Expermental(context)
-            var exp2 = new Expermental2(context)
-            var exp3 = new Expermental3(context)
-            var exp4 = new Expermental4(context)
-            var now = context.currentTime
-    
-    for(let i = 0; i < pattern.count; i++){
-        switch(pattern[i]){
-            case '1':
-                exp1.trigger(now, .5)
-                break;
-            case '2':
-                exp2.trigger(now, .5)
-                break;
-            case '3':
-                exp3.trigger(now, .5)
-                break;
-            case '4':
-                snare.trigger(now, .5)
-                break;
-            case '5':
-               snare2.trigger(now, .5)
-                break;
-            case '6':
-                kick.trigger(now, .5)
-                break;
-            default:
-                exp4.trigger(now, .5)
-        }
-    }
-}
-
-function stringParse(str){
-    
-    var tempArr = str.split(",")
-    
-    if(tempArr.count == 0){
-        tempArr = str.split(" ")
-    }
-    return tempArr
-}
         
 /////////////////////////////////////////////////////////////////////////////////////////////
  
 ///////////////////////////// DRAW FUNCTION //////////////////////////////////////////
-     let counterOne = 0
-     let counterTwo = 0
-     let counterThree = 0
+function getMousePos(canvas, mouse) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+          x: mouse.clientX - rect.left,
+          y: mouse.clientY - rect.top
+        };
+      }
        
-     beat()
+        beat()
       
       let draw = function() {
-       
         runAutomata()
           
         ctx.fillStyle = bgColor
         ctx.fillRect( 0,0,width,height )
         ctx.fillStyle = cColor
 
-
         for( let y = 0; y < height; y++ ) {
           for( let x = 0; x < width; x++ ) {
+              
+                
+               console.log(mouse)
+                if( y == mouse.x && x == mouse.y ) {
+                grid[x-1][y-1] = 0;
+                grid[x-1][y] = 0;
+                grid[x-1][y+1] = 0;
+                grid[x][y-1] = 0;
+                grid[x][y+1] = 0;
+                grid[x+1][y+1] = 0;
+                 grid[x+1][y] = 0;
+                grid[x+1][y-1] = 0;
+            } 
             if( grid[ y ][ x ] === 1 ) {
               ctx.fillRect( x,y,1,1 ) 
             } 
@@ -720,14 +754,10 @@ function stringParse(str){
         window.requestAnimationFrame( draw )
       }
       
-     counterTwo, counterThree = counterOne++
-     console.log(counterThree)
-     
-     
       window.requestAnimationFrame( draw )
      
       
-      //////////////// USER INPUT ////////////////////////////////////////////////////
+/////////////////// USER INPUT ////////////////////////////////////////////////////
       
 document.querySelector("#OneButton").onclick = function(){
     var colorValue = document.getElementById("colorOne").value
@@ -751,30 +781,28 @@ document.querySelector("#FourButton").onclick = function(){
 }
 
 document.querySelector("#OneTimerButton").onclick = function(){
-    var timer = document.getElementById("timerOne").value
-   timerOne = timerCheck(timer ,timerOne)
-   clear()
-     beat()
+    var str = document.getElementById("timerOne").value
+    beatOne = stringParse(str)
 }
 document.querySelector("#TwoTimerButton").onclick = function(){
-    var timer  = document.getElementById("timerTwo").value
-    timerTwo = timerCheck(timer ,timerTwo)
-    clear()
-     beat()
+    var str  = document.getElementById("timerTwo").value
+   beatTwo = stringParse(str)
 }
 document.querySelector("#ThreeTimerButton").onclick = function(){
-    var timer  = document.getElementById("timerThree").value
-    timerThree = timerCheck(timer ,timerThree)
-    clear()
-    beat()
+    var str = document.getElementById("timerThree").value
+   beatThree = stringParse(str)
     
 }
+
+
 
 function clear(){
     clearInterval(intervalOne)
     clearInterval(intervalThree)
     clearInterval(intervalTwo)
 }
+
+
 
 //Valid hex check
 ///http://stackoverflow.com/questions/8027423/how-to-check-if-a-string-is-a-valid-hex-color-representation
